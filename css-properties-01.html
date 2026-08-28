@@ -1,0 +1,1381 @@
+<!doctype html>
+<html lang="km">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Properties Studio & Learning Lab</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Kantumruy+Pro:ital,wght@0,300..700;1,300..700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg-dark: #0f172a;
+        --bg-card: #1e293b;
+        --bg-input: #334155;
+        --border-color: #475569;
+        --accent-color: #6366f1;
+        --accent-hover: #4f46e5;
+        --accent-light: rgba(99, 102, 241, 0.15);
+        --text-main: #f8fafc;
+        --text-muted: #94a3b8;
+        --highlight: #38bdf8;
+        --success: #10b981;
+        --radius-sm: 8px;
+        --radius-md: 12px;
+        --radius-lg: 18px;
+        --shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.3);
+        --font-km: "Kantumruy Pro", "Plus Jakarta Sans", sans-serif;
+        --font-code: "Fira Code", monospace;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: var(--font-km);
+        background-color: var(--bg-dark);
+        color: var(--text-main);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+      }
+
+      header {
+        background: rgba(30, 41, 59, 0.8);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border-color);
+        padding: 1rem 1.5rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .brand-icon {
+        width: 42px;
+        height: 42px;
+        background: linear-gradient(135deg, #6366f1, #a855f7);
+        border-radius: var(--radius-sm);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        color: white;
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+      }
+
+      .brand-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--text-main);
+        letter-spacing: -0.02em;
+      }
+
+      .brand-subtitle {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+      }
+
+      .header-controls {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+
+      .preset-btn {
+        background: var(--bg-input);
+        color: var(--text-main);
+        border: 1px solid var(--border-color);
+        padding: 0.5rem 0.85rem;
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        font-size: 0.85rem;
+        font-family: inherit;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        transition: all 0.2s ease;
+      }
+
+      .preset-btn:hover {
+        background: var(--accent-hover);
+        border-color: var(--accent-color);
+        color: white;
+      }
+
+      .app-layout {
+        display: grid;
+        grid-template-columns: 360px 1fr 340px;
+        gap: 1.25rem;
+        padding: 1.25rem;
+        flex: 1;
+        max-width: 1800px;
+        margin: 0 auto;
+        width: 100%;
+      }
+
+      @media (max-width: 1200px) {
+        .app-layout {
+          grid-template-columns: 340px 1fr;
+        }
+        .code-panel {
+          grid-column: span 2;
+        }
+      }
+
+      @media (max-width: 850px) {
+        .app-layout {
+          grid-template-columns: 1fr;
+        }
+        .code-panel {
+          grid-column: span 1;
+        }
+      }
+
+      /* Panel Containers */
+      .panel {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+
+      .panel-header {
+        padding: 1rem 1.25rem;
+        border-bottom: 1px solid var(--border-color);
+        background: rgba(15, 23, 42, 0.4);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .panel-title {
+        font-size: 0.95rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--highlight);
+      }
+
+      .panel-body {
+        padding: 1.25rem;
+        overflow-y: auto;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+      }
+
+      /* Tabbed Navigation inside Controls */
+      .tab-nav {
+        display: flex;
+        background: var(--bg-dark);
+        padding: 4px;
+        border-radius: var(--radius-sm);
+        gap: 4px;
+        margin-bottom: 0.5rem;
+      }
+
+      .tab-btn {
+        flex: 1;
+        background: transparent;
+        border: none;
+        color: var(--text-muted);
+        padding: 0.5rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        border-radius: 6px;
+        cursor: pointer;
+        font-family: inherit;
+        transition: all 0.2s;
+        text-align: center;
+      }
+
+      .tab-btn.active {
+        background: var(--accent-color);
+        color: white;
+      }
+
+      /* Form Controls */
+      .control-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        padding: 0.75rem;
+        background: rgba(15, 23, 42, 0.25);
+        border-radius: var(--radius-sm);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        transition: border-color 0.2s;
+      }
+
+      .control-group:hover {
+        border-color: rgba(99, 102, 241, 0.3);
+      }
+
+      .control-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      label {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-main);
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+      }
+
+      .prop-code {
+        font-family: var(--font-code);
+        color: #38bdf8;
+        font-size: 0.8rem;
+      }
+
+      .val-badge {
+        font-family: var(--font-code);
+        font-size: 0.75rem;
+        color: var(--highlight);
+        background: var(--accent-light);
+        padding: 2px 6px;
+        border-radius: 4px;
+      }
+
+      input[type="text"],
+      select {
+        width: 100%;
+        background: var(--bg-input);
+        border: 1px solid var(--border-color);
+        color: var(--text-main);
+        padding: 0.5rem;
+        border-radius: var(--radius-sm);
+        font-size: 0.85rem;
+        font-family: inherit;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+
+      input[type="text"]:focus,
+      select:focus {
+        border-color: var(--accent-color);
+      }
+
+      .color-input-wrapper {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+
+      input[type="color"] {
+        -webkit-appearance: none;
+        border: none;
+        width: 38px;
+        height: 38px;
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        background: transparent;
+      }
+
+      input[type="color"]::-webkit-color-swatch-wrapper {
+        padding: 0;
+      }
+
+      input[type="color"]::-webkit-color-swatch {
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-sm);
+      }
+
+      input[type="range"] {
+        width: 100%;
+        accent-color: var(--accent-color);
+        height: 6px;
+        border-radius: 3px;
+        background: var(--bg-input);
+        outline: none;
+        cursor: pointer;
+      }
+
+      .button-group {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+        gap: 4px;
+      }
+
+      .opt-btn {
+        background: var(--bg-input);
+        border: 1px solid var(--border-color);
+        color: var(--text-muted);
+        padding: 0.4rem;
+        font-size: 0.75rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-family: inherit;
+        transition: all 0.2s;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .opt-btn:hover,
+      .opt-btn.active {
+        background: var(--accent-color);
+        color: white;
+        border-color: var(--accent-color);
+      }
+
+      /* Canvas / Preview Area */
+      .preview-panel {
+        position: relative;
+      }
+
+      .canvas-toolbar {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+
+      .canvas-viewport {
+        flex: 1;
+        background: #020617;
+        background-image: radial-gradient(
+          rgba(255, 255, 255, 0.1) 1px,
+          transparent 1px
+        );
+        background-size: 20px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        min-height: 380px;
+        position: relative;
+        overflow: hidden;
+        border-radius: 0 0 var(--radius-md) var(--radius-md);
+      }
+
+      /* The Dynamic Element being styled */
+      #previewBox {
+        width: 100%;
+        max-width: 540px;
+        min-height: 220px;
+        padding: 2rem;
+        border-radius: 16px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        transition: all 0.15s ease-out;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        word-wrap: break-word;
+        position: relative;
+        overflow: hidden;
+      }
+
+      #previewText {
+        transition: all 0.15s ease-out;
+        max-width: 100%;
+      }
+
+      /* Documentation Card */
+      .doc-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        padding: 1rem 1.25rem;
+        margin-top: 1rem;
+      }
+
+      .doc-title {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: var(--highlight);
+        margin-bottom: 0.4rem;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+
+      .doc-desc {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        line-height: 1.5;
+      }
+
+      .doc-syntax {
+        background: var(--bg-dark);
+        padding: 0.4rem 0.6rem;
+        border-radius: 4px;
+        font-family: var(--font-code);
+        font-size: 0.78rem;
+        color: #e2e8f0;
+        margin-top: 0.5rem;
+        border-left: 3px solid var(--accent-color);
+      }
+
+      /* Code Output Panel */
+      .code-container {
+        position: relative;
+        background: #020617;
+        border-radius: var(--radius-sm);
+        padding: 1rem;
+        font-family: var(--font-code);
+        font-size: 0.85rem;
+        line-height: 1.6;
+        color: #f1f5f9;
+        overflow-x: auto;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        flex: 1;
+      }
+
+      .code-line {
+        display: block;
+      }
+
+      .code-selector {
+        color: #f43f5e;
+      }
+
+      .code-prop {
+        color: #38bdf8;
+        padding-left: 1.2rem;
+      }
+
+      .code-val {
+        color: #a3e635;
+      }
+
+      .code-punct {
+        color: #94a3b8;
+      }
+
+      .copy-btn {
+        position: absolute;
+        top: 0.75rem;
+        right: 0.75rem;
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        color: white;
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        transition: background 0.2s;
+      }
+
+      .copy-btn:hover {
+        background: var(--accent-color);
+      }
+
+      /* Toast Notification */
+      .toast {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: var(--success);
+        color: white;
+        padding: 0.75rem 1.25rem;
+        border-radius: var(--radius-sm);
+        font-weight: 600;
+        font-size: 0.85rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        transform: translateY(100px);
+        opacity: 0;
+        transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .toast.show {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      .tab-content {
+        display: none;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .tab-content.active {
+        display: flex;
+      }
+
+      .sample-text-inputs {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="brand">
+        <div class="brand-icon">
+          <i class="fa-solid fa-code"></i>
+        </div>
+        <div>
+          <div class="brand-title">រចនាគេហទំព័រជាមួយ CSS Properties</div>
+          <div class="brand-subtitle">
+            Interactive Color, Background, Font & Text Studio
+          </div>
+        </div>
+      </div>
+      <div class="header-controls">
+        <button class="preset-btn" onclick="applyPreset('modernDark')">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> Modern Dark
+        </button>
+        <button class="preset-btn" onclick="applyPreset('vibrantCard')">
+          <i class="fa-solid fa-palette"></i> Vibrant Light
+        </button>
+        <button class="preset-btn" onclick="applyPreset('khmerArt')">
+          <i class="fa-solid fa-feather-pointed"></i> Khmer Art
+        </button>
+        <button class="preset-btn" onclick="resetProperties()">
+          <i class="fa-solid fa-rotate-right"></i> Reset
+        </button>
+      </div>
+    </header>
+
+    <div class="app-layout">
+      <!-- LEFT PANEL: Controls -->
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title"
+            ><i class="fa-sliders fa-solid"></i> CSS Controls</span
+          >
+        </div>
+
+        <div class="panel-body">
+          <!-- Category Tabs -->
+          <div class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab('color-bg')">
+              Color & BG
+            </button>
+            <button class="tab-btn" onclick="switchTab('font-text')">
+              Font & Text
+            </button>
+          </div>
+
+          <!-- TAB 1: COLOR & BACKGROUND -->
+          <div id="tab-color-bg" class="tab-content active">
+            <!-- 2.1.1 color -->
+            <div class="control-group" onmouseenter="showDoc('color')">
+              <div class="control-header">
+                <label
+                  ><i class="fa-solid fa-font"></i>
+                  <span>Text Color</span></label
+                >
+                <span class="prop-code">color</span>
+              </div>
+              <div class="color-input-wrapper">
+                <input
+                  type="color"
+                  id="input-color"
+                  value="#ffffff"
+                  oninput="updateStyle('color', this.value)"
+                />
+                <input
+                  type="text"
+                  id="input-color-text"
+                  value="#ffffff"
+                  oninput="updateStyle('color', this.value)"
+                />
+              </div>
+            </div>
+
+            <!-- 2.1.2 background-color -->
+            <div
+              class="control-group"
+              onmouseenter="showDoc('background-color')"
+            >
+              <div class="control-header">
+                <label
+                  ><i class="fa-solid fa-fill-drip"></i>
+                  <span>BG Color</span></label
+                >
+                <span class="prop-code">background-color</span>
+              </div>
+              <div class="color-input-wrapper">
+                <input
+                  type="color"
+                  id="input-bg-color"
+                  value="#6366f1"
+                  oninput="updateStyle('backgroundColor', this.value)"
+                />
+                <input
+                  type="text"
+                  id="input-bg-color-text"
+                  value="#6366f1"
+                  oninput="updateStyle('backgroundColor', this.value)"
+                />
+              </div>
+            </div>
+
+            <!-- 2.1.3 background-image -->
+            <div
+              class="control-group"
+              onmouseenter="showDoc('background-image')"
+            >
+              <div class="control-header">
+                <label
+                  ><i class="fa-solid fa-image"></i>
+                  <span>BG Image</span></label
+                >
+                <span class="prop-code">background-image</span>
+              </div>
+              <select
+                id="input-bg-image"
+                onchange="updateStyle('backgroundImage', this.value)"
+              >
+                <option value="none">none</option>
+                <option
+                  value="url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80')"
+                >
+                  Abstract Fluid (Unsplash)
+                </option>
+                <option
+                  value="url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&w=600&q=80')"
+                >
+                  Dark Neon Pattern
+                </option>
+                <option
+                  value="radial-gradient(circle, #6366f1 0%, #0f172a 100%)"
+                >
+                  Gradient Radial
+                </option>
+                <option value="linear-gradient(45deg, #f43f5e, #38bdf8)">
+                  Linear Gradient
+                </option>
+              </select>
+            </div>
+
+            <!-- 2.1.4 background-repeat -->
+            <div
+              class="control-group"
+              onmouseenter="showDoc('background-repeat')"
+            >
+              <div class="control-header">
+                <label
+                  ><i class="fa-solid fa-repeat"></i>
+                  <span>BG Repeat</span></label
+                >
+                <span class="prop-code">background-repeat</span>
+              </div>
+              <div class="button-group">
+                <button
+                  class="opt-btn active"
+                  onclick="setOpt('backgroundRepeat', 'no-repeat', this)"
+                >
+                  no-repeat
+                </button>
+                <button
+                  class="opt-btn"
+                  onclick="setOpt('backgroundRepeat', 'repeat', this)"
+                >
+                  repeat
+                </button>
+                <button
+                  class="opt-btn"
+                  onclick="setOpt('backgroundRepeat', 'repeat-x', this)"
+                >
+                  repeat-x
+                </button>
+                <button
+                  class="opt-btn"
+                  onclick="setOpt('backgroundRepeat', 'repeat-y', this)"
+                >
+                  repeat-y
+                </button>
+              </div>
+            </div>
+
+            <!-- 2.1.5 background-size -->
+            <div
+              class="control-group"
+              onmouseenter="showDoc('background-size')"
+            >
+              <div class="control-header">
+                <label
+                  ><i class="fa-solid fa-expand"></i>
+                  <span>BG Size</span></label
+                >
+                <span class="prop-code">background-size</span>
+              </div>
+              <div class="button-group">
+                <button
+                  class="opt-btn active"
+                  onclick="setOpt('backgroundSize', 'cover', this)"
+                >
+                  cover
+                </button>
+                <button
+                  class="opt-btn"
+                  onclick="setOpt('backgroundSize', 'contain', this)"
+                >
+                  contain
+                </button>
+                <button
+                  class="opt-btn"
+                  onclick="setOpt('backgroundSize', 'auto', this)"
+                >
+                  auto
+                </button>
+                <button
+                  class="opt-btn"
+                  onclick="setOpt('backgroundSize', '100% 100%', this)"
+                >
+                  100%
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 2: FONT & TEXT -->
+          <div id="tab-font-text" class="tab-content">
+            <!-- 2.2.1 font-family -->
+            <div class="control-group" onmouseenter="showDoc('font-family')">
+              <div class="control-header">
+                <label
+                  ><i class="fa-solid fa-font-case"></i>
+                  <span>Font Family</span></label
+                >
+                <span class="prop-code">font-family</span>
+              </div>
+              <select
+                id="input-font-family"
+                onchange="updateStyle('fontFamily', this.value)"
+              >
+                <option value="'Kantumruy Pro', sans-serif">
+                  Kantumruy Pro (Khmer)
+                </option>
+                <option value="'Plus Jakarta Sans', sans-serif">
+                  Plus Jakarta Sans
+                </option>
+                <option value="'Arial', sans-serif">Arial, sans-serif</option>
+                <option value="'Georgia', serif">Georgia, serif</option>
+                <option value="'Fira Code', monospace">
+                  Fira Code, monospace
+                </option>
+                <option value="cursive">Cursive</option>
+              </select>
+            </div>
+
+            <!-- 2.2.2 font-size -->
+            <div class="control-group" onmouseenter="showDoc('font-size')">
+              <div class="control-header">
+                <label
+                  ><i class="fa-solid fa-text-height"></i>
+                  <span>Font Size</span></label
+                >
+                <span class="val-badge" id="val-font-size">22px</span>
+              </div>
+              <input
+                type="range"
+                id="input-font-size"
+                min="12"
+                max="48"
+                value="22"
+                oninput="
+                  updateRangeStyle(
+                    'fontSize',
+                    this.value,
+                    'px',
+                    'val-font-size',
+                  )
+                "
+              />
+            </div>
+
+            <!-- 2.2.3 font-weight -->
+            <div class="control-group" onmouseenter="showDoc('font-weight')">
+              <div class="control-header">
+                <label
+                  ><i class="fa-solid fa-bold"></i>
+                  <span>Font Weight</span></label
+                >
+                <span class="val-badge" id="val-font-weight">600</span>
+              </div>
+              <div class="button-group">
+                <button
+                  class="opt-btn"
+                  onclick="setOpt('fontWeight', '300', this, 'val-font-weight')"
+                >
+                  300
+                </button>
+                <button
+                  class="opt-btn"
+                  onclick="setOpt('fontWeight', '400', this, 'val-font-weight')"
+                >
+                  400
+                </button>
+                <button
+                  class="opt-btn active"
+                  onclick="setOpt('fontWeight', '600', this, 'val-font-weight')"
+                >
+                  600
+                </button>
+                <button
+                  class="opt-btn"
+                  onclick="setOpt('fontWeight', '800', this, 'val-font-weight')"
+                >
+                  800
+                </button>
+                <button
+                  class="opt-btn"
+                  onclick="
+                    setOpt('fontWeight', 'bold', this, 'val-font-weight')
+                  "
+                >
+                  bold
+                </button>
+              </div>
+            </div>
+
+            <!-- 2.2.4 font-style -->
+            <div class="control-group" onmouseenter="showDoc('font-style')">
+              <div class="control-header">
+                <label
+                  ><i class="fa-solid fa-italic"></i>
+                  <span>Font Style</span></label
+                >
+                <span class="prop-code">font-style</span>
+              </div>
+              <div class="button-group">
+                <button
+                  class="opt-btn active"
+                  onclick="setOpt('fontStyle', 'normal', this)"
+                >
+                  normal
+                </button>
+                <button
+                  class="opt-btn"
+                  onclick="setOpt('fontStyle', 'italic', this)"
+                >
+                  italic
+                </button>
+                <button
+                  class="opt-btn"
+                  onclick="setOpt('fontStyle', 'oblique', this)"
+                >
+                  oblique
+                </button>
+              </div>
+            </div>
+
+            <!-- 2.2.5 text-align -->
+            <div class="control-group" onmouseenter="showDoc('text-align')">
+              <div class="control-header">
+                <label
+                  ><i class="fa-solid fa-align-center"></i>
+                  <span>Text Align</span></label
+                >
+                <span class="prop-code">text-align</span>
+              </div>
+              <div class="button-group">
+                <button
+                  class="opt-btn"
+                  onclick="setOpt('textAlign', 'left', this)"
+                >
+                  <i class="fa-solid fa-align-left"></i>
+                </button>
+                <button
+                  class="opt-btn active"
+                  onclick="setOpt('textAlign', 'center', this)"
+                >
+                  <i class="fa-solid fa-align-center"></i>
+                </button>
+                <button
+                  class="opt-btn"
+                  onclick="setOpt('textAlign', 'right', this)"
+                >
+                  <i class="fa-solid fa-align-right"></i>
+                </button>
+                <button
+                  class="opt-btn"
+                  onclick="setOpt('textAlign', 'justify', this)"
+                >
+                  <i class="fa-solid fa-align-justify"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- 2.2.6 text-decoration -->
+            <div
+              class="control-group"
+              onmouseenter="showDoc('text-decoration')"
+            >
+              <div class="control-header">
+                <label
+                  ><i class="fa-solid fa-underline"></i>
+                  <span>Text Decoration</span></label
+                >
+                <span class="prop-code">text-decoration</span>
+              </div>
+              <div class="button-group">
+                <button
+                  class="opt-btn active"
+                  onclick="setOpt('textDecoration', 'none', this)"
+                >
+                  none
+                </button>
+                <button
+                  class="opt-btn"
+                  onclick="setOpt('textDecoration', 'underline', this)"
+                >
+                  underline
+                </button>
+                <button
+                  class="opt-btn"
+                  onclick="setOpt('textDecoration', 'overline', this)"
+                >
+                  overline
+                </button>
+                <button
+                  class="opt-btn"
+                  onclick="setOpt('textDecoration', 'line-through', this)"
+                >
+                  line-through
+                </button>
+              </div>
+            </div>
+
+            <!-- 2.2.7 line-height -->
+            <div class="control-group" onmouseenter="showDoc('line-height')">
+              <div class="control-header">
+                <label
+                  ><i class="fa-solid fa-arrows-vertical"></i>
+                  <span>Line Height</span></label
+                >
+                <span class="val-badge" id="val-line-height">1.6</span>
+              </div>
+              <input
+                type="range"
+                id="input-line-height"
+                min="1.0"
+                max="3.0"
+                step="0.1"
+                value="1.6"
+                oninput="
+                  updateRangeStyle(
+                    'lineHeight',
+                    this.value,
+                    '',
+                    'val-line-height',
+                  )
+                "
+              />
+            </div>
+          </div>
+
+          <!-- Custom Text Input -->
+          <div class="sample-text-inputs">
+            <label style="font-size: 0.75rem; color: var(--text-muted)"
+              >កែប្រែអត្ថបទគំរូ (Custom Text):</label
+            >
+            <input
+              type="text"
+              id="sampleText"
+              value="ការប្រើប្រាស់ CSS Properties សម្រាប់ការរចនាគេហទំព័រ"
+              oninput="updateSampleText(this.value)"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- CENTER PANEL: Live Canvas Preview -->
+      <div class="panel preview-panel">
+        <div class="panel-header">
+          <span class="panel-title"
+            ><i class="fa-solid fa-eye"></i> Visual Preview</span
+          >
+          <div class="canvas-toolbar">
+            <span style="font-size: 0.75rem; color: var(--text-muted)"
+              >Element Container &lt;div&gt;</span
+            >
+          </div>
+        </div>
+        <div class="canvas-viewport">
+          <div id="previewBox">
+            <div id="previewText">
+              <h2 id="previewTitle" style="margin-bottom: 0.5rem">
+                រចនាគេហទំព័រជាមួយ CSS
+              </h2>
+              <p id="previewBody">
+                CSS Properties គឺជាគុណលក្ខណៈដែលអាចប្រើក្នុង CSS
+                ដើម្បីកំណត់រចនាប័ទ្ម និងរូបរាងរបស់ធាតុ HTML។
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Khmer Documentation Footer Card -->
+        <div class="doc-card" id="docCard">
+          <div class="doc-title">
+            <i class="fa-solid fa-book-open"></i>
+            <span id="docName">color</span>
+          </div>
+          <div class="doc-desc" id="docDesc">
+            កំណត់ពណ៌អក្សរនៃ Element។ (Sets the text content color of an
+            element).
+          </div>
+          <div class="doc-syntax" id="docSyntax">selector { color: blue; }</div>
+        </div>
+      </div>
+
+      <!-- RIGHT PANEL: CSS Generated Code -->
+      <div class="panel code-panel">
+        <div class="panel-header">
+          <span class="panel-title"
+            ><i class="fa-solid fa-code"></i> Generated CSS Code</span
+          >
+        </div>
+        <div class="panel-body">
+          <div class="code-container">
+            <button class="copy-btn" onclick="copyCssCode()">
+              <i class="fa-regular fa-copy"></i> Copy CSS
+            </button>
+            <code id="codeOutput">
+              <!-- Code injected dynamically via JS -->
+            </code>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+      <i class="fa-solid fa-circle-check"></i>
+      <span>CSS code copied to clipboard!</span>
+    </div>
+
+    <script>
+      // CSS Knowledge Base with Khmer Explanations from prompt
+      const docs = {
+        color: {
+          name: "color (ពណ៌អក្សរ)",
+          desc: "កំណត់ពណ៌អក្សរនៃ Element (Sets the color of the text content).",
+          syntax: "p { color: blue; }",
+        },
+        "background-color": {
+          name: "background-color (ពណ៌ផ្ទៃខាងក្រោយ)",
+          desc: "កំណត់ពណ៌ផ្ទៃខាងក្រោយនៃ Element (Sets the background color of an element).",
+          syntax: "div { background-color: #f0f0f0; }",
+        },
+        "background-image": {
+          name: "background-image (រូបភាពផ្ទៃខាងក្រោយ)",
+          desc: "បន្ថែមរូបភាពជាផ្ទៃខាងក្រោយ (Sets one or more background images for an element).",
+          syntax: "body { background-image: url('background.jpg'); }",
+        },
+        "background-repeat": {
+          name: "background-repeat (ការជាន់រូបភាពផ្ទៃខាងក្រោយ)",
+          desc: "កំណត់របៀបដំណើរការរូបភាពផ្ទៃខាងក្រោយ (ធ្វើចំលង ឬមិនចំលង) (Sets if/how a background image will be repeated).",
+          syntax: "body { background-repeat: no-repeat; }",
+        },
+        "background-size": {
+          name: "background-size (ទំហំរូបភាពផ្ទៃខាងក្រោយ)",
+          desc: "កំណត់ទំហំរូបភាពផ្ទៃខាងក្រោយ (Specifies the size of the background images).",
+          syntax: "body { background-size: cover; }",
+        },
+        "font-family": {
+          name: "font-family (គ្រួសារពុម្ពអក្សរ)",
+          desc: "កំណត់គ្រួសារពុម្ពអក្សរ (Specifies the font for an element).",
+          syntax: "body { font-family: 'Arial', sans-serif; }",
+        },
+        "font-size": {
+          name: "font-size (ទំហំអក្សរ)",
+          desc: "កំណត់ទំហំអក្សរ (Sets the size of the font).",
+          syntax: "p { font-size: 16px; }",
+        },
+        "font-weight": {
+          name: "font-weight (ទម្ងន់អក្សរ)",
+          desc: "កំណត់ទម្ងន់អក្សរ - normal, bold, ឬលេខ 100-900 (Sets how thick or thin characters in text should be displayed).",
+          syntax: "h1 { font-weight: bold; }",
+        },
+        "font-style": {
+          name: "font-style (រចនាបែបអក្សរ)",
+          desc: "កំណត់រចនាបែបអក្សរ - normal, italic, oblique (Specifies the font style for a text).",
+          syntax: "em { font-style: italic; }",
+        },
+        "text-align": {
+          name: "text-align (ការតម្រឹមអត្ថបទ)",
+          desc: "តម្រឹមអត្ថបទ - left, right, center, justify (Specifies the horizontal alignment of text).",
+          syntax: "p { text-align: justify; }",
+        },
+        "text-decoration": {
+          name: "text-decoration (ការលម្អអត្ថបទ)",
+          desc: "បន្ថែមបំពង់ - underline, overline, line-through ទៅលើអត្ថបទ (Specifies the decoration added to text).",
+          syntax: "a { text-decoration: none; }",
+        },
+        "line-height": {
+          name: "line-height (កម្ពស់បន្ទាត់)",
+          desc: "កំណត់កម្ពស់បន្ទាត់របស់អត្ថបទ (Sets the height of a line box).",
+          syntax: "p { line-height: 25px; }",
+        },
+      };
+
+      // State Object
+      const state = {
+        color: "#ffffff",
+        backgroundColor: "#6366f1",
+        backgroundImage: "none",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        fontFamily: "'Kantumruy Pro', sans-serif",
+        fontSize: "22px",
+        fontWeight: "600",
+        fontStyle: "normal",
+        textAlign: "center",
+        textDecoration: "none",
+        lineHeight: "1.6",
+      };
+
+      const previewBox = document.getElementById("previewBox");
+      const previewText = document.getElementById("previewText");
+
+      // Initialize
+      window.addEventListener("DOMContentLoaded", () => {
+        applyState();
+      });
+
+      function switchTab(tabName) {
+        document
+          .querySelectorAll(".tab-btn")
+          .forEach((btn) => btn.classList.remove("active"));
+        document
+          .querySelectorAll(".tab-content")
+          .forEach((content) => content.classList.remove("active"));
+
+        if (tabName === "color-bg") {
+          event.target.classList.add("active");
+          document.getElementById("tab-color-bg").classList.add("active");
+        } else {
+          event.target.classList.add("active");
+          document.getElementById("tab-font-text").classList.add("active");
+        }
+      }
+
+      function updateStyle(prop, val) {
+        state[prop] = val;
+        if (prop === "color") {
+          document.getElementById("input-color").value = val;
+          document.getElementById("input-color-text").value = val;
+        }
+        if (prop === "backgroundColor") {
+          document.getElementById("input-bg-color").value = val;
+          document.getElementById("input-bg-color-text").value = val;
+        }
+        applyState();
+      }
+
+      function updateRangeStyle(prop, val, unit = "", badgeId) {
+        state[prop] = val + unit;
+        if (badgeId) {
+          document.getElementById(badgeId).innerText = val + unit;
+        }
+        applyState();
+      }
+
+      function setOpt(prop, val, btn, badgeId = null) {
+        state[prop] = val;
+        const parent = btn.parentElement;
+        parent
+          .querySelectorAll(".opt-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        if (badgeId) {
+          document.getElementById(badgeId).innerText = val;
+        }
+        applyState();
+      }
+
+      function updateSampleText(val) {
+        document.getElementById("previewTitle").innerText =
+          val || "រចនាគេហទំព័រជាមួយ CSS";
+      }
+
+      function applyState() {
+        // Apply styles to box & text element
+        previewBox.style.backgroundColor = state.backgroundColor;
+        previewBox.style.backgroundImage = state.backgroundImage;
+        previewBox.style.backgroundRepeat = state.backgroundRepeat;
+        previewBox.style.backgroundSize = state.backgroundSize;
+
+        previewBox.style.color = state.color;
+        previewBox.style.fontFamily = state.fontFamily;
+        previewBox.style.fontSize = state.fontSize;
+        previewBox.style.fontWeight = state.fontWeight;
+        previewBox.style.fontStyle = state.fontStyle;
+        previewBox.style.textAlign = state.textAlign;
+        previewBox.style.textDecoration = state.textDecoration;
+        previewBox.style.lineHeight = state.lineHeight;
+
+        renderCssCode();
+      }
+
+      function renderCssCode() {
+        const codeOutput = document.getElementById("codeOutput");
+        let html = `<span class="code-selector">.custom-element</span> <span class="code-punct">{</span><br>`;
+
+        // Color & Background
+        html += `<span class="code-prop">color</span><span class="code-punct">:</span> <span class="code-val">${state.color}</span><span class="code-punct">;</span><br>`;
+        html += `<span class="code-prop">background-color</span><span class="code-punct">:</span> <span class="code-val">${state.backgroundColor}</span><span class="code-punct">;</span><br>`;
+
+        if (state.backgroundImage !== "none") {
+          html += `<span class="code-prop">background-image</span><span class="code-punct">:</span> <span class="code-val">${state.backgroundImage}</span><span class="code-punct">;</span><br>`;
+          html += `<span class="code-prop">background-repeat</span><span class="code-punct">:</span> <span class="code-val">${state.backgroundRepeat}</span><span class="code-punct">;</span><br>`;
+          html += `<span class="code-prop">background-size</span><span class="code-punct">:</span> <span class="code-val">${state.backgroundSize}</span><span class="code-punct">;</span><br>`;
+        }
+
+        // Font & Text
+        html += `<span class="code-prop">font-family</span><span class="code-punct">:</span> <span class="code-val">${state.fontFamily}</span><span class="code-punct">;</span><br>`;
+        html += `<span class="code-prop">font-size</span><span class="code-punct">:</span> <span class="code-val">${state.fontSize}</span><span class="code-punct">;</span><br>`;
+        html += `<span class="code-prop">font-weight</span><span class="code-punct">:</span> <span class="code-val">${state.fontWeight}</span><span class="code-punct">;</span><br>`;
+        html += `<span class="code-prop">font-style</span><span class="code-punct">:</span> <span class="code-val">${state.fontStyle}</span><span class="code-punct">;</span><br>`;
+        html += `<span class="code-prop">text-align</span><span class="code-punct">:</span> <span class="code-val">${state.textAlign}</span><span class="code-punct">;</span><br>`;
+        html += `<span class="code-prop">text-decoration</span><span class="code-punct">:</span> <span class="code-val">${state.textDecoration}</span><span class="code-punct">;</span><br>`;
+        html += `<span class="code-prop">line-height</span><span class="code-punct">:</span> <span class="code-val">${state.lineHeight}</span><span class="code-punct">;</span><br>`;
+
+        html += `<span class="code-punct">}</span>`;
+        codeOutput.innerHTML = html;
+      }
+
+      function showDoc(propKey) {
+        const item = docs[propKey];
+        if (item) {
+          document.getElementById("docName").innerText = item.name;
+          document.getElementById("docDesc").innerText = item.desc;
+          document.getElementById("docSyntax").innerText = item.syntax;
+        }
+      }
+
+      function applyPreset(name) {
+        if (name === "modernDark") {
+          state.color = "#38bdf8";
+          state.backgroundColor = "#0f172a";
+          state.backgroundImage = "none";
+          state.fontFamily = "'Plus Jakarta Sans', sans-serif";
+          state.fontSize = "24px";
+          state.fontWeight = "700";
+          state.fontStyle = "normal";
+          state.textAlign = "center";
+          state.textDecoration = "none";
+          state.lineHeight = "1.5";
+        } else if (name === "vibrantCard") {
+          state.color = "#0f172a";
+          state.backgroundColor = "#f43f5e";
+          state.backgroundImage = "linear-gradient(45deg, #f43f5e, #38bdf8)";
+          state.fontFamily = "'Plus Jakarta Sans', sans-serif";
+          state.fontSize = "22px";
+          state.fontWeight = "800";
+          state.fontStyle = "normal";
+          state.textAlign = "center";
+          state.textDecoration = "none";
+          state.lineHeight = "1.4";
+        } else if (name === "khmerArt") {
+          state.color = "#fef08a";
+          state.backgroundColor = "#1e1b4b";
+          state.backgroundImage =
+            "radial-gradient(circle, #6366f1 0%, #0f172a 100%)";
+          state.fontFamily = "'Kantumruy Pro', sans-serif";
+          state.fontSize = "26px";
+          state.fontWeight = "600";
+          state.fontStyle = "italic";
+          state.textAlign = "center";
+          state.textDecoration = "none";
+          state.lineHeight = "1.8";
+        }
+
+        // Synchronize inputs
+        document.getElementById("input-color").value =
+          state.color.length === 7 ? state.color : "#ffffff";
+        document.getElementById("input-color-text").value = state.color;
+        document.getElementById("input-bg-color").value =
+          state.backgroundColor.length === 7 ?
+            state.backgroundColor
+          : "#6366f1";
+        document.getElementById("input-bg-color-text").value =
+          state.backgroundColor;
+        document.getElementById("input-bg-image").value = state.backgroundImage;
+        document.getElementById("input-font-family").value = state.fontFamily;
+        document.getElementById("input-font-size").value = parseInt(
+          state.fontSize,
+        );
+        document.getElementById("val-font-size").innerText = state.fontSize;
+        document.getElementById("val-font-weight").innerText = state.fontWeight;
+        document.getElementById("input-line-height").value = parseFloat(
+          state.lineHeight,
+        );
+        document.getElementById("val-line-height").innerText = state.lineHeight;
+
+        applyState();
+      }
+
+      function resetProperties() {
+        applyPreset("modernDark");
+      }
+
+      function copyCssCode() {
+        const rawText = `/* CSS Generated Properties */
+.custom-element {
+  color: ${state.color};
+  background-color: ${state.backgroundColor};
+  ${
+    state.backgroundImage !== "none" ?
+      `background-image: ${state.backgroundImage};
+  background-repeat: ${state.backgroundRepeat};
+  background-size: ${state.backgroundSize};
+`
+    : ""
+  }  font-family: ${state.fontFamily};
+  font-size: ${state.fontSize};
+  font-weight: ${state.fontWeight};
+  font-style: ${state.fontStyle};
+  text-align: ${state.textAlign};
+  text-decoration: ${state.textDecoration};
+  line-height: ${state.lineHeight};
+}`;
+
+        navigator.clipboard.writeText(rawText).then(() => {
+          const toast = document.getElementById("toast");
+          toast.classList.add("show");
+          setTimeout(() => {
+            toast.classList.remove("show");
+          }, 2500);
+        });
+      }
+    </script>
+  </body>
+</html>
