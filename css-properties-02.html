@@ -1,0 +1,1340 @@
+<!doctype html>
+<html lang="km">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ការសិក្សា CSS Properties - Visual Studio</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Kantumruy+Pro:ital,wght@0,300..700;1,300..700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg-dark: #0f172a;
+        --card-bg: #1e293b;
+        --card-border: #334155;
+        --accent-indigo: #6366f1;
+        --accent-pink: #ec4899;
+        --accent-cyan: #06b6d4;
+        --accent-green: #10b981;
+        --accent-amber: #f59e0b;
+        --text-main: #f8fafc;
+        --text-muted: #94a3b8;
+        --font-km: "Kantumruy Pro", sans-serif;
+        --font-code: "Fira Code", monospace;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background-color: var(--bg-dark);
+        color: var(--text-main);
+        font-family: var(--font-km);
+        min-height: 100vh;
+        padding: 1.5rem;
+        line-height: 1.6;
+      }
+
+      .app-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      /* Header Styling */
+      .header-card {
+        background: linear-gradient(
+          135deg,
+          rgba(30, 41, 59, 0.9),
+          rgba(15, 23, 42, 0.9)
+        );
+        border: 1px solid var(--card-border);
+        border-radius: 16px;
+        padding: 1.5rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(10px);
+      }
+
+      .header-title-group {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .header-icon {
+        width: 52px;
+        height: 52px;
+        background: linear-gradient(
+          135deg,
+          var(--accent-indigo),
+          var(--accent-pink)
+        );
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: white;
+        box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+      }
+
+      .header-text h1 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #ffffff;
+        letter-spacing: 0.5px;
+      }
+
+      .header-text p {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+      }
+
+      .badge-tag {
+        background: rgba(99, 102, 241, 0.15);
+        color: #a5b4fc;
+        border: 1px solid rgba(99, 102, 241, 0.3);
+        padding: 0.25rem 0.75rem;
+        border-radius: 999px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+
+      /* Nav Tabs */
+      .nav-tabs {
+        display: flex;
+        gap: 0.5rem;
+        background: rgba(30, 41, 59, 0.6);
+        padding: 0.4rem;
+        border-radius: 12px;
+        border: 1px solid var(--card-border);
+      }
+
+      .nav-btn {
+        background: transparent;
+        border: none;
+        color: var(--text-muted);
+        padding: 0.6rem 1.2rem;
+        border-radius: 8px;
+        font-family: var(--font-km);
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .nav-btn:hover {
+        color: var(--text-main);
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .nav-btn.active {
+        background: var(--accent-indigo);
+        color: white;
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+      }
+
+      /* Main Content Layout */
+      .tab-content {
+        display: none;
+      }
+      .tab-content.active {
+        display: block;
+      }
+
+      /* Sandbox Section */
+      .sandbox-grid {
+        display: grid;
+        grid-template-columns: 360px 1fr;
+        gap: 1.5rem;
+      }
+
+      @media (max-width: 992px) {
+        .sandbox-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .control-panel {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 16px;
+        padding: 1.25rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+        height: fit-content;
+      }
+
+      .panel-title {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--text-main);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        border-bottom: 1px solid var(--card-border);
+        padding-bottom: 0.75rem;
+      }
+
+      .control-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+
+      .group-label {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--accent-cyan);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .field-row {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+      }
+
+      .field-row label {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .field-row label span.val-display {
+        color: var(--accent-pink);
+        font-family: var(--font-code);
+        font-size: 0.8rem;
+      }
+
+      .input-ctrl {
+        background: #0f172a;
+        border: 1px solid var(--card-border);
+        border-radius: 8px;
+        color: var(--text-main);
+        padding: 0.5rem 0.75rem;
+        font-family: var(--font-km);
+        font-size: 0.85rem;
+        outline: none;
+        transition: border-color 0.2s;
+        width: 100%;
+      }
+
+      .input-ctrl:focus {
+        border-color: var(--accent-indigo);
+      }
+
+      input[type="color"].input-ctrl {
+        height: 38px;
+        padding: 2px;
+        cursor: pointer;
+      }
+
+      .btn-segmented {
+        display: flex;
+        background: #0f172a;
+        border: 1px solid var(--card-border);
+        border-radius: 8px;
+        padding: 2px;
+        gap: 2px;
+      }
+
+      .segmented-btn {
+        flex: 1;
+        background: transparent;
+        border: none;
+        color: var(--text-muted);
+        padding: 0.4rem 0.2rem;
+        border-radius: 6px;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .segmented-btn.active {
+        background: var(--accent-indigo);
+        color: white;
+      }
+
+      /* Studio Visual Canvas */
+      .visual-stage {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .preview-canvas {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 16px;
+        padding: 2.5rem;
+        min-height: 320px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        background-image: radial-gradient(
+          rgba(255, 255, 255, 0.05) 1px,
+          transparent 1px
+        );
+        background-size: 20px 20px;
+      }
+
+      .demo-element-box {
+        width: 100%;
+        max-width: 550px;
+        padding: 2rem;
+        border-radius: 12px;
+        transition: all 0.2s ease;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        border: 1px dashed rgba(255, 255, 255, 0.2);
+      }
+
+      .demo-element-box p {
+        outline: none;
+      }
+
+      /* Code Editor Box */
+      .code-editor-card {
+        background: #090d16;
+        border: 1px solid var(--card-border);
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      }
+
+      .editor-header {
+        background: #1e293b;
+        padding: 0.6rem 1.2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid var(--card-border);
+      }
+
+      .window-dots {
+        display: flex;
+        gap: 6px;
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+      }
+      .dot-red {
+        background: #ef4444;
+      }
+      .dot-yellow {
+        background: #f59e0b;
+      }
+      .dot-green {
+        background: #10b981;
+      }
+
+      .btn-copy {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid var(--card-border);
+        color: var(--text-main);
+        padding: 0.35rem 0.8rem;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        transition: background 0.2s;
+      }
+
+      .btn-copy:hover {
+        background: var(--accent-indigo);
+      }
+
+      .code-body {
+        padding: 1.25rem;
+        font-family: var(--font-code);
+        font-size: 0.9rem;
+        color: #e2e8f0;
+        overflow-x: auto;
+        white-space: pre;
+        line-height: 1.7;
+      }
+
+      .css-selector {
+        color: #f472b6;
+      }
+      .css-prop {
+        color: #38bdf8;
+      }
+      .css-val {
+        color: #a7f3d0;
+      }
+      .css-punct {
+        color: #94a3b8;
+      }
+
+      /* Reference Cards Tab */
+      .cards-controls {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        flex-wrap: wrap;
+      }
+
+      .search-box {
+        flex: 1;
+        min-width: 250px;
+        position: relative;
+      }
+
+      .search-box i {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-muted);
+      }
+
+      .search-input {
+        width: 100%;
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 10px;
+        padding: 0.7rem 1rem 0.7rem 2.6rem;
+        color: var(--text-main);
+        font-family: var(--font-km);
+        outline: none;
+      }
+
+      .search-input:focus {
+        border-color: var(--accent-indigo);
+      }
+
+      .filter-pills {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+
+      .pill-btn {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        color: var(--text-muted);
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: var(--font-km);
+      }
+
+      .pill-btn.active {
+        background: rgba(99, 102, 241, 0.2);
+        color: var(--accent-indigo);
+        border-color: var(--accent-indigo);
+      }
+
+      .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 1.25rem;
+      }
+
+      .prop-card {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 14px;
+        padding: 1.25rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 1rem;
+        transition:
+          transform 0.2s,
+          border-color 0.2s,
+          box-shadow 0.2s;
+      }
+
+      .prop-card:hover {
+        transform: translateY(-3px);
+        border-color: var(--accent-indigo);
+        box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.4);
+      }
+
+      .card-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+
+      .prop-name {
+        font-family: var(--font-code);
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--accent-pink);
+      }
+
+      .prop-cat {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--accent-cyan);
+        border: 1px solid rgba(6, 182, 212, 0.2);
+      }
+
+      .prop-desc {
+        font-size: 0.88rem;
+        color: var(--text-main);
+      }
+
+      .code-snippet {
+        background: #090d16;
+        border-radius: 8px;
+        padding: 0.6rem 0.8rem;
+        font-family: var(--font-code);
+        font-size: 0.8rem;
+        color: #a7f3d0;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .btn-apply-sandbox {
+        background: rgba(99, 102, 241, 0.1);
+        border: 1px solid rgba(99, 102, 241, 0.3);
+        color: #a5b4fc;
+        padding: 0.5rem;
+        border-radius: 8px;
+        font-family: var(--font-km);
+        font-size: 0.8rem;
+        cursor: pointer;
+        text-align: center;
+        transition: all 0.2s;
+      }
+
+      .btn-apply-sandbox:hover {
+        background: var(--accent-indigo);
+        color: white;
+      }
+
+      /* Syntax tab */
+      .syntax-card {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 16px;
+        padding: 2rem;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .syntax-diagram {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        background: #090d16;
+        padding: 2rem;
+        border-radius: 12px;
+        margin: 1.5rem 0;
+        font-family: var(--font-code);
+        font-size: 1.2rem;
+        flex-wrap: wrap;
+      }
+
+      .syntax-block {
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        position: relative;
+        cursor: help;
+      }
+
+      .syntax-block::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: -32px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--accent-indigo);
+        color: white;
+        padding: 0.2rem 0.6rem;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-family: var(--font-km);
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s;
+      }
+
+      .syntax-block:hover::after {
+        opacity: 1;
+      }
+
+      .sb-selector {
+        background: rgba(244, 114, 182, 0.2);
+        border: 1px solid #f472b6;
+        color: #f472b6;
+      }
+      .sb-prop {
+        background: rgba(56, 189, 248, 0.2);
+        border: 1px solid #38bdf8;
+        color: #38bdf8;
+      }
+      .sb-val {
+        background: rgba(167, 243, 208, 0.2);
+        border: 1px solid #a7f3d0;
+        color: #a7f3d0;
+      }
+
+      /* Toast */
+      .toast {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        background: var(--accent-green);
+        color: white;
+        padding: 0.75rem 1.25rem;
+        border-radius: 10px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        transform: translateY(100px);
+        opacity: 0;
+        transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        z-index: 1000;
+      }
+
+      .toast.show {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Header -->
+      <header class="header-card">
+        <div class="header-title-group">
+          <div class="header-icon">
+            <i class="fa-solid fa-code"></i>
+          </div>
+          <div class="header-text">
+            <h1>សាលារចនា CSS Properties Studio</h1>
+            <p>រៀនសូត្រ និងសាកល្បង CSS Properties ផ្ទាល់ៗជាភាសាខ្មែរ</p>
+          </div>
+        </div>
+        <span class="badge-tag"
+          ><i class="fa-solid fa-sparkles"></i> Interactive 2025</span
+        >
+      </header>
+
+      <!-- Navigation -->
+      <nav class="nav-tabs">
+        <button class="nav-btn active" onclick="switchTab('sandbox')">
+          <i class="fa-solid fa-sliders"></i> បន្ទប់សាកល្បង (Live Studio)
+        </button>
+        <button class="nav-btn" onclick="switchTab('cards')">
+          <i class="fa-solid fa-layer-group"></i> បណ្ណចំណេះដឹង (Property Cards)
+        </button>
+        <button class="nav-btn" onclick="switchTab('syntax')">
+          <i class="fa-solid fa-book-open"></i> មូលដ្ឋានគ្រឹះ (Syntax)
+        </button>
+      </nav>
+
+      <!-- Tab 1: Live Sandbox Studio -->
+      <div id="tab-sandbox" class="tab-content active">
+        <div class="sandbox-grid">
+          <!-- Controls -->
+          <aside class="control-panel">
+            <div class="panel-title">
+              <i class="fa-solid fa-sliders text-indigo-400"></i> កំណត់លក្ខណៈ
+              CSS
+            </div>
+
+            <!-- Color & BG -->
+            <div class="control-group">
+              <span class="group-label">1. Color & Background</span>
+
+              <div class="field-row">
+                <label for="ctrl-color">color (ពណ៌អក្សរ)</label>
+                <input
+                  type="color"
+                  id="ctrl-color"
+                  class="input-ctrl"
+                  value="#ffffff"
+                  oninput="updateCSS()"
+                />
+              </div>
+
+              <div class="field-row">
+                <label for="ctrl-bgcolor">background-color (ពណ៌ផ្ទៃ)</label>
+                <input
+                  type="color"
+                  id="ctrl-bgcolor"
+                  class="input-ctrl"
+                  value="#4f46e5"
+                  oninput="updateCSS()"
+                />
+              </div>
+
+              <div class="field-row">
+                <label for="ctrl-bgimg">background-image (រូបភាពផ្ទៃ)</label>
+                <select
+                  id="ctrl-bgimg"
+                  class="input-ctrl"
+                  onchange="updateCSS()"
+                >
+                  <option value="none">គ្មាន (None)</option>
+                  <option
+                    value="url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=600&q=80')"
+                  >
+                    Gradient Mesh
+                  </option>
+                  <option
+                    value="url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=600&q=80')"
+                  >
+                    Dark Cyber
+                  </option>
+                </select>
+              </div>
+
+              <div class="field-row">
+                <label for="ctrl-bgrepeat">background-repeat</label>
+                <select
+                  id="ctrl-bgrepeat"
+                  class="input-ctrl"
+                  onchange="updateCSS()"
+                >
+                  <option value="no-repeat">no-repeat</option>
+                  <option value="repeat">repeat</option>
+                  <option value="repeat-x">repeat-x</option>
+                  <option value="repeat-y">repeat-y</option>
+                </select>
+              </div>
+
+              <div class="field-row">
+                <label for="ctrl-bgsize">background-size</label>
+                <select
+                  id="ctrl-bgsize"
+                  class="input-ctrl"
+                  onchange="updateCSS()"
+                >
+                  <option value="cover">cover</option>
+                  <option value="contain">contain</option>
+                  <option value="auto">auto</option>
+                  <option value="100% 100%">100% 100%</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Font & Text -->
+            <div class="control-group">
+              <span class="group-label">2. Font & Text Properties</span>
+
+              <div class="field-row">
+                <label for="ctrl-fontfamily">font-family</label>
+                <select
+                  id="ctrl-fontfamily"
+                  class="input-ctrl"
+                  onchange="updateCSS()"
+                >
+                  <option value="'Kantumruy Pro', sans-serif">
+                    Kantumruy Pro (default)
+                  </option>
+                  <option value="'Arial', sans-serif">Arial</option>
+                  <option value="'Georgia', serif">Georgia</option>
+                  <option value="'Fira Code', monospace">Fira Code</option>
+                </select>
+              </div>
+
+              <div class="field-row">
+                <label for="ctrl-fontsize"
+                  >font-size
+                  <span id="val-fontsize" class="val-display">18px</span></label
+                >
+                <input
+                  type="range"
+                  id="ctrl-fontsize"
+                  min="12"
+                  max="36"
+                  value="18"
+                  class="input-ctrl"
+                  oninput="updateCSS()"
+                />
+              </div>
+
+              <div class="field-row">
+                <label for="ctrl-fontweight"
+                  >font-weight
+                  <span id="val-fontweight" class="val-display"
+                    >500</span
+                  ></label
+                >
+                <input
+                  type="range"
+                  id="ctrl-fontweight"
+                  min="100"
+                  max="900"
+                  step="100"
+                  value="500"
+                  class="input-ctrl"
+                  oninput="updateCSS()"
+                />
+              </div>
+
+              <div class="field-row">
+                <label>font-style</label>
+                <div class="btn-segmented">
+                  <button
+                    class="segmented-btn active"
+                    id="btn-style-normal"
+                    onclick="setFontStyle('normal')"
+                  >
+                    normal
+                  </button>
+                  <button
+                    class="segmented-btn"
+                    id="btn-style-italic"
+                    onclick="setFontStyle('italic')"
+                  >
+                    italic
+                  </button>
+                </div>
+              </div>
+
+              <div class="field-row">
+                <label>text-align</label>
+                <div class="btn-segmented">
+                  <button
+                    class="segmented-btn active"
+                    id="btn-align-left"
+                    onclick="setTextAlign('left')"
+                  >
+                    <i class="fa-solid fa-align-left"></i>
+                  </button>
+                  <button
+                    class="segmented-btn"
+                    id="btn-align-center"
+                    onclick="setTextAlign('center')"
+                  >
+                    <i class="fa-solid fa-align-center"></i>
+                  </button>
+                  <button
+                    class="segmented-btn"
+                    id="btn-align-right"
+                    onclick="setTextAlign('right')"
+                  >
+                    <i class="fa-solid fa-align-right"></i>
+                  </button>
+                  <button
+                    class="segmented-btn"
+                    id="btn-align-justify"
+                    onclick="setTextAlign('justify')"
+                  >
+                    <i class="fa-solid fa-align-justify"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="field-row">
+                <label for="ctrl-textdecoration">text-decoration</label>
+                <select
+                  id="ctrl-textdecoration"
+                  class="input-ctrl"
+                  onchange="updateCSS()"
+                >
+                  <option value="none">none</option>
+                  <option value="underline">underline</option>
+                  <option value="overline">overline</option>
+                  <option value="line-through">line-through</option>
+                </select>
+              </div>
+
+              <div class="field-row">
+                <label for="ctrl-lineheight"
+                  >line-height
+                  <span id="val-lineheight" class="val-display"
+                    >1.6</span
+                  ></label
+                >
+                <input
+                  type="range"
+                  id="ctrl-lineheight"
+                  min="1"
+                  max="3"
+                  step="0.1"
+                  value="1.6"
+                  class="input-ctrl"
+                  oninput="updateCSS()"
+                />
+              </div>
+            </div>
+          </aside>
+
+          <!-- Canvas & Code Display -->
+          <main class="visual-stage">
+            <div class="preview-canvas">
+              <div id="demo-card" class="demo-element-box">
+                <h2 style="margin-bottom: 0.5rem; font-size: 1.3em">
+                  ជំរាបសួរ CSS Properties!
+                </h2>
+                <p id="demo-text">
+                  នេះជាប្រអប់បង្ហាញផ្ទាល់ (Live Dynamic Canvas)។
+                  អ្នកអាចកែប្រែតម្លៃ CSS នៅខាងឆ្វេង
+                  ដើម្បីមើលការផ្លាស់ប្តូររូបរាង និងទទួលបានកូដ CSS ភ្លាមៗ។
+                </p>
+              </div>
+            </div>
+
+            <!-- Code Generator -->
+            <div class="code-editor-card">
+              <div class="editor-header">
+                <div class="window-dots">
+                  <span class="dot dot-red"></span>
+                  <span class="dot dot-yellow"></span>
+                  <span class="dot dot-green"></span>
+                </div>
+                <span
+                  style="
+                    font-size: 0.8rem;
+                    color: var(--text-muted);
+                    font-family: var(--font-code);
+                  "
+                  >style.css</span
+                >
+                <button class="btn-copy" onclick="copyGeneratedCSS()">
+                  <i class="fa-regular fa-copy"></i> ចម្លងកូដ
+                </button>
+              </div>
+              <div id="code-output" class="code-body"></div>
+            </div>
+          </main>
+        </div>
+      </div>
+
+      <!-- Tab 2: Reference Property Cards -->
+      <div id="tab-cards" class="tab-content">
+        <div class="cards-controls">
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input
+              type="text"
+              id="search-input"
+              class="search-input"
+              placeholder="ស្វែងរក CSS property ឬពាក្យពន្យល់..."
+              oninput="filterCards()"
+            />
+          </div>
+          <div class="filter-pills">
+            <button class="pill-btn active" onclick="setFilter('all', this)">
+              ទាំងអស់
+            </button>
+            <button class="pill-btn" onclick="setFilter('color-bg', this)">
+              Color & BG
+            </button>
+            <button class="pill-btn" onclick="setFilter('font-text', this)">
+              Font & Text
+            </button>
+          </div>
+        </div>
+
+        <div class="cards-grid" id="cards-grid-container">
+          <!-- JS dynamically renders cards here -->
+        </div>
+      </div>
+
+      <!-- Tab 3: Syntax & Theory -->
+      <div id="tab-syntax" class="tab-content">
+        <div class="syntax-card">
+          <h2 style="color: var(--accent-indigo); margin-bottom: 1rem">
+            1. សេចក្ដីផ្តើមអំពី CSS Properties
+          </h2>
+          <p style="color: var(--text-muted); margin-bottom: 1.5rem">
+            CSS Properties គឺជាគុណលក្ខណៈដែលអាចប្រើក្នុង CSS ដើម្បីកំណត់រចនាប័ទ្ម
+            និងរូបរាងរបស់ធាតុ HTML។ ក្នុង CSS, Properties
+            ត្រូវបានប្រើរួមជាមួយតម្លៃ (values)
+            ដើម្បីបញ្ជាក់របៀបដែលធាតុត្រូវបង្ហាញលើគេហទំព័រ។
+          </p>
+
+          <h3
+            style="
+              font-size: 1.1rem;
+              color: var(--text-main);
+              margin-bottom: 0.8rem;
+            "
+          >
+            Syntax មូលដ្ឋាន៖
+          </h3>
+
+          <div class="syntax-diagram">
+            <span
+              class="syntax-block sb-selector"
+              data-tooltip="Selector (ធាតុ HTML ដែលត្រូវរចនា)"
+              >p</span
+            >
+            <span style="color: var(--text-muted)">{</span>
+            <span
+              class="syntax-block sb-prop"
+              data-tooltip="Property (គុណលក្ខណៈ)"
+              >color</span
+            >
+            <span style="color: var(--text-muted)">:</span>
+            <span class="syntax-block sb-val" data-tooltip="Value (តម្លៃ)"
+              >blue</span
+            >
+            <span style="color: var(--text-muted)">;</span>
+            <span style="color: var(--text-muted)">}</span>
+          </div>
+
+          <div
+            style="
+              background: rgba(99, 102, 241, 0.08);
+              border-left: 4px solid var(--accent-indigo);
+              padding: 1rem;
+              border-radius: 0 8px 8px 0;
+              margin-top: 1.5rem;
+            "
+          >
+            <p style="font-size: 0.9rem; color: #a5b4fc">
+              💡 <strong>គន្លឹះ៖</strong> ដាក់ mouse លើផ្នែកនីមួយៗនៃ Syntax
+              ខាងលើ ដើម្បីមើលការពន្យល់លម្អិត! jedem Syntax block gibt Aufschluss
+              über Selector, Property និង Value។
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+      <i class="fa-solid fa-circle-check"></i> កូដ CSS ត្រូវបានចម្លងដោយជោគជ័យ!
+    </div>
+
+    <script>
+      // Data Source for CSS Properties from User Prompt
+      const cssPropertiesData = [
+        {
+          name: "color",
+          cat: "color-bg",
+          catLabel: "Color & BG",
+          desc: "កំណត់ពណ៌អក្សរនៃ Element។",
+          code: "p {\n  color: blue;\n}",
+          preset: { color: "#6366f1" },
+        },
+        {
+          name: "background-color",
+          cat: "color-bg",
+          catLabel: "Color & BG",
+          desc: "កំណត់ពណ៌ផ្ទៃខាងក្រោយនៃ Element។",
+          code: "div {\n  background-color: #f0f0f0;\n}",
+          preset: { bgcolor: "#1e1b4b" },
+        },
+        {
+          name: "background-image",
+          cat: "color-bg",
+          catLabel: "Color & BG",
+          desc: "បន្ថែមរូបភាពជាផ្ទៃខាងក្រោយ។",
+          code: "body {\n  background-image: url('background.jpg');\n}",
+          preset: {
+            bgimg:
+              "url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=600&q=80')",
+          },
+        },
+        {
+          name: "background-repeat",
+          cat: "color-bg",
+          catLabel: "Color & BG",
+          desc: "កំណត់របៀបដំណើរការរូបភាពផ្ទៃខាងក្រោយ (ធ្វើចំលង ឬមិនចំលង)។",
+          code: "body {\n  background-repeat: no-repeat;\n}",
+          preset: { bgrepeat: "no-repeat" },
+        },
+        {
+          name: "background-size",
+          cat: "color-bg",
+          catLabel: "Color & BG",
+          desc: "កំណត់ទំហំរូបភាពផ្ទៃខាងក្រោយ។",
+          code: "body {\n  background-size: cover;\n}",
+          preset: { bgsize: "cover" },
+        },
+        {
+          name: "font-family",
+          cat: "font-text",
+          catLabel: "Font & Text",
+          desc: "កំណត់គ្រួសារពុម្ពអក្សរ។",
+          code: "body {\n  font-family: 'Arial', sans-serif;\n}",
+          preset: { fontfamily: "'Fira Code', monospace" },
+        },
+        {
+          name: "font-size",
+          cat: "font-text",
+          catLabel: "Font & Text",
+          desc: "កំណត់ទំហំអក្សរ។",
+          code: "p {\n  font-size: 16px;\n}",
+          preset: { fontsize: 22 },
+        },
+        {
+          name: "font-weight",
+          cat: "font-text",
+          catLabel: "Font & Text",
+          desc: "កំណត់ទម្ងន់អក្សរ (normal, bold, ឬលេខ 100-900)។",
+          code: "h1 {\n  font-weight: bold;\n}",
+          preset: { fontweight: 700 },
+        },
+        {
+          name: "font-style",
+          cat: "font-text",
+          catLabel: "Font & Text",
+          desc: "កំណត់រចនាបែបអក្សរ (normal, italic, oblique)។",
+          code: "em {\n  font-style: italic;\n}",
+          preset: { fontstyle: "italic" },
+        },
+        {
+          name: "text-align",
+          cat: "font-text",
+          catLabel: "Font & Text",
+          desc: "តម្រឹមអត្ថបទ (left, right, center, justify)។",
+          code: "p {\n  text-align: justify;\n}",
+          preset: { textalign: "center" },
+        },
+        {
+          name: "text-decoration",
+          cat: "font-text",
+          catLabel: "Font & Text",
+          desc: "បន្ថែមបំពង់ (underline, overline, line-through) ទៅលើអត្ថបទ។",
+          code: "a {\n  text-decoration: none;\n}",
+          preset: { textdecoration: "underline" },
+        },
+        {
+          name: "line-height",
+          cat: "font-text",
+          catLabel: "Font & Text",
+          desc: "កំណត់កម្ពស់បន្ទាត់របស់អត្ថបទ។",
+          code: "p {\n  line-height: 25px;\n}",
+          preset: { lineheight: 2.2 },
+        },
+      ];
+
+      // State Variables
+      let currentFontStyle = "normal";
+      let currentTextAlign = "left";
+      let activeCategory = "all";
+
+      // Tab Switching Logic
+      function switchTab(tabId) {
+        document
+          .querySelectorAll(".tab-content")
+          .forEach((el) => el.classList.remove("active"));
+        document
+          .querySelectorAll(".nav-btn")
+          .forEach((btn) => btn.classList.remove("active"));
+
+        document.getElementById("tab-" + tabId).classList.add("active");
+        event.currentTarget.classList.add("active");
+      }
+
+      // Live Controls Update
+      function setFontStyle(val) {
+        currentFontStyle = val;
+        document
+          .getElementById("btn-style-normal")
+          .classList.toggle("active", val === "normal");
+        document
+          .getElementById("btn-style-italic")
+          .classList.toggle("active", val === "italic");
+        updateCSS();
+      }
+
+      function setTextAlign(val) {
+        currentTextAlign = val;
+        ["left", "center", "right", "justify"].forEach((a) => {
+          const btn = document.getElementById("btn-align-" + a);
+          if (btn) btn.classList.toggle("active", a === val);
+        });
+        updateCSS();
+      }
+
+      function updateCSS() {
+        const color = document.getElementById("ctrl-color").value;
+        const bgcolor = document.getElementById("ctrl-bgcolor").value;
+        const bgimg = document.getElementById("ctrl-bgimg").value;
+        const bgrepeat = document.getElementById("ctrl-bgrepeat").value;
+        const bgsize = document.getElementById("ctrl-bgsize").value;
+        const fontfamily = document.getElementById("ctrl-fontfamily").value;
+        const fontsize = document.getElementById("ctrl-fontsize").value;
+        const fontweight = document.getElementById("ctrl-fontweight").value;
+        const textdecoration = document.getElementById(
+          "ctrl-textdecoration",
+        ).value;
+        const lineheight = document.getElementById("ctrl-lineheight").value;
+
+        // Displays update
+        document.getElementById("val-fontsize").innerText = fontsize + "px";
+        document.getElementById("val-fontweight").innerText = fontweight;
+        document.getElementById("val-lineheight").innerText = lineheight;
+
+        // Apply Styles to Canvas Box
+        const demoCard = document.getElementById("demo-card");
+        demoCard.style.color = color;
+        demoCard.style.backgroundColor = bgcolor;
+        demoCard.style.backgroundImage = bgimg;
+        demoCard.style.backgroundRepeat = bgrepeat;
+        demoCard.style.backgroundSize = bgsize;
+        demoCard.style.fontFamily = fontfamily;
+        demoCard.style.fontSize = fontsize + "px";
+        demoCard.style.fontWeight = fontweight;
+        demoCard.style.fontStyle = currentFontStyle;
+        demoCard.style.textAlign = currentTextAlign;
+        demoCard.style.textDecoration = textdecoration;
+        demoCard.style.lineHeight = lineheight;
+
+        // Render Code Block
+        const codeHTML = `<span class="css-selector">.custom-card</span> <span class="css-punct">{</span>
+  <span class="css-prop">color</span><span class="css-punct">:</span> <span class="css-val">${color}</span><span class="css-punct">;</span>
+  <span class="css-prop">background-color</span><span class="css-punct">:</span> <span class="css-val">${bgcolor}</span><span class="css-punct">;</span>
+  <span class="css-prop">background-image</span><span class="css-punct">:</span> <span class="css-val">${bgimg}</span><span class="css-punct">;</span>
+  <span class="css-prop">background-repeat</span><span class="css-punct">:</span> <span class="css-val">${bgrepeat}</span><span class="css-punct">;</span>
+  <span class="css-prop">background-size</span><span class="css-punct">:</span> <span class="css-val">${bgsize}</span><span class="css-punct">;</span>
+  <span class="css-prop">font-family</span><span class="css-punct">:</span> <span class="css-val">${fontfamily}</span><span class="css-punct">;</span>
+  <span class="css-prop">font-size</span><span class="css-punct">:</span> <span class="css-val">${fontsize}px</span><span class="css-punct">;</span>
+  <span class="css-prop">font-weight</span><span class="css-punct">:</span> <span class="css-val">${fontweight}</span><span class="css-punct">;</span>
+  <span class="css-prop">font-style</span><span class="css-punct">:</span> <span class="css-val">${currentFontStyle}</span><span class="css-punct">;</span>
+  <span class="css-prop">text-align</span><span class="css-punct">:</span> <span class="css-val">${currentTextAlign}</span><span class="css-punct">;</span>
+  <span class="css-prop">text-decoration</span><span class="css-punct">:</span> <span class="css-val">${textdecoration}</span><span class="css-punct">;</span>
+  <span class="css-prop">line-height</span><span class="css-punct">:</span> <span class="css-val">${lineheight}</span><span class="css-punct">;</span>
+<span class="css-punct">}</span>`;
+
+        document.getElementById("code-output").innerHTML = codeHTML;
+      }
+
+      // Render Cards Grid
+      function renderCards(data) {
+        const container = document.getElementById("cards-grid-container");
+        container.innerHTML = "";
+
+        if (data.length === 0) {
+          container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 3rem;">រកមិនឃើញ CSS Property ដែលស្វែងរកឡើយ!</p>`;
+          return;
+        }
+
+        data.forEach((item) => {
+          const card = document.createElement("div");
+          card.className = "prop-card";
+          card.innerHTML = `
+          <div>
+            <div class="card-top">
+              <span class="prop-name">${item.name}</span>
+              <span class="prop-cat">${item.catLabel}</span>
+            </div>
+            <p class="prop-desc" style="margin-top: 0.6rem;">${item.desc}</p>
+          </div>
+          <pre class="code-snippet"><code>${item.code}</code></pre>
+          <button class="btn-apply-sandbox" onclick="applyPreset('${item.name}')">
+            <i class="fa-solid fa-play"></i> សាកល្បងក្នុង Studio
+          </button>
+        `;
+          container.appendChild(card);
+        });
+      }
+
+      function applyPreset(propName) {
+        const item = cssPropertiesData.find((p) => p.name === propName);
+        if (!item || !item.preset) return;
+
+        const p = item.preset;
+        if (p.color) document.getElementById("ctrl-color").value = p.color;
+        if (p.bgcolor)
+          document.getElementById("ctrl-bgcolor").value = p.bgcolor;
+        if (p.bgimg) document.getElementById("ctrl-bgimg").value = p.bgimg;
+        if (p.bgrepeat)
+          document.getElementById("ctrl-bgrepeat").value = p.bgrepeat;
+        if (p.bgsize) document.getElementById("ctrl-bgsize").value = p.bgsize;
+        if (p.fontfamily)
+          document.getElementById("ctrl-fontfamily").value = p.fontfamily;
+        if (p.fontsize)
+          document.getElementById("ctrl-fontsize").value = p.fontsize;
+        if (p.fontweight)
+          document.getElementById("ctrl-fontweight").value = p.fontweight;
+        if (p.fontstyle) setFontStyle(p.fontstyle);
+        if (p.textalign) setTextAlign(p.textalign);
+        if (p.textdecoration)
+          document.getElementById("ctrl-textdecoration").value =
+            p.textdecoration;
+        if (p.lineheight)
+          document.getElementById("ctrl-lineheight").value = p.lineheight;
+
+        updateCSS();
+
+        // Switch tab to sandbox
+        const sandboxBtn = document.querySelectorAll(".nav-btn")[0];
+        sandboxBtn.click();
+      }
+
+      function filterCards() {
+        const query = document
+          .getElementById("search-input")
+          .value.toLowerCase();
+        const filtered = cssPropertiesData.filter((item) => {
+          const matchesCat =
+            activeCategory === "all" || item.cat === activeCategory;
+          const matchesQuery =
+            item.name.toLowerCase().includes(query) ||
+            item.desc.toLowerCase().includes(query);
+          return matchesCat && matchesQuery;
+        });
+        renderCards(filtered);
+      }
+
+      function setFilter(cat, btn) {
+        activeCategory = cat;
+        document
+          .querySelectorAll(".pill-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        filterCards();
+      }
+
+      function copyGeneratedCSS() {
+        const rawText = document.getElementById("code-output").innerText;
+        navigator.clipboard.writeText(rawText).then(() => {
+          const toast = document.getElementById("toast");
+          toast.classList.add("show");
+          setTimeout(() => {
+            toast.classList.remove("show");
+          }, 2500);
+        });
+      }
+
+      // Init
+      window.addEventListener("DOMContentLoaded", () => {
+        updateCSS();
+        renderCards(cssPropertiesData);
+      });
+    </script>
+  </body>
+</html>
